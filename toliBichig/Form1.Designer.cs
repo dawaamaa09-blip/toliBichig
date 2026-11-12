@@ -170,6 +170,7 @@
             btnSave.TabIndex = 12;
             btnSave.Text = "Санах";
             btnSave.UseVisualStyleBackColor = true;
+            btnSave.Click += btnSave_Click;
             // 
             // btnClear
             // 

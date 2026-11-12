@@ -285,5 +285,73 @@ namespace toliBichig
 
         }
 
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.CurrentRow == null ||
+        dataGridView1.CurrentRow.IsNewRow ||
+        dataGridView1.CurrentRow.Cells[0].Value == null)
+            {
+                MessageBox.Show("Санах үгээ сонгоно уу!");
+                return;
+            }
+
+            int id = Convert.ToInt32(
+                dataGridView1.CurrentRow.Cells[0].Value);
+
+            // 1. Үндсэн өгөгдлийн сангаас үгийг унших
+            using var conn1 = new SqliteConnection(
+                $@"Data Source={dbPath}");
+
+            conn1.Open();
+
+            using var cmd1 = conn1.CreateCommand();
+
+            cmd1.CommandText =
+                "SELECT eng, mon, rus FROM words WHERE id=@id";
+
+            cmd1.Parameters.AddWithValue("@id", id);
+
+            using var reader = cmd1.ExecuteReader();
+
+            if (!reader.Read())
+            {
+                MessageBox.Show("Үг олдсонгүй!");
+                return;
+            }
+
+            string eng = reader.GetString(0);
+            string mon = reader.GetString(1);
+            string rus = reader.GetString(2);
+
+            // 2. saved.db өгөгдлийн сантай холбогдох
+            using var conn2 = new SqliteConnection(
+                $@"Data Source={savedDbPath}");
+
+            conn2.Open();
+
+            using var cmd2 = conn2.CreateCommand();
+
+            // 3. Сонгосон үгийг хадгалах
+            cmd2.CommandText = @"
+        INSERT OR IGNORE INTO saved_words
+        (id, eng, mon, rus)
+        VALUES (@id, @eng, @mon, @rus)";
+
+            cmd2.Parameters.AddWithValue("@id", id);
+            cmd2.Parameters.AddWithValue("@eng", eng);
+            cmd2.Parameters.AddWithValue("@mon", mon);
+            cmd2.Parameters.AddWithValue("@rus", rus);
+
+            int added = cmd2.ExecuteNonQuery();
+
+            // 4. Хүснэгт болон тоог шинэчлэх
+            LoadSavedWords();
+            UpdateCount();
+
+            if (added > 0)
+                MessageBox.Show("Үг амжилттай хадгалагдлаа!");
+            else
+                MessageBox.Show("Энэ үг өмнө нь хадгалагдсан байна!");
+        }
     }
 }
