@@ -158,6 +158,7 @@
             btnAdd.TabIndex = 10;
             btnAdd.Text = "+ Нэмэх ";
             btnAdd.UseVisualStyleBackColor = true;
+            btnAdd.Click += btnAdd_Click;
             // 
             // btnSave
             // 
