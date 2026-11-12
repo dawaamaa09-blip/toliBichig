@@ -76,6 +76,7 @@
             txtSearch.PlaceholderText = "Хайх үг...";
             txtSearch.Size = new Size(602, 42);
             txtSearch.TabIndex = 1;
+            txtSearch.TextChanged += txtSearch_TextChanged;
             // 
             // lblLanguage
             // 
@@ -189,6 +190,7 @@
             btnDelete.TabIndex = 14;
             btnDelete.Text = "Устгах";
             btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.Click += btnDelete_Click;
             // 
             // btnEdit
             // 

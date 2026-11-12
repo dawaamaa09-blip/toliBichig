@@ -185,5 +185,86 @@ namespace toliBichig
 
             MessageBox.Show("Үг амжилттай нэмэгдлээ!");
         }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.CurrentRow == null ||
+        dataGridView1.CurrentRow.IsNewRow)
+            {
+                MessageBox.Show("Устгах үгээ сонгоно уу!");
+                return;
+            }
+
+            int id = Convert.ToInt32(
+                dataGridView1.CurrentRow.Cells[0].Value);
+
+            DialogResult result = MessageBox.Show(
+                "Энэ үгийг устгах уу?",
+                "Баталгаажуулах",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (result != DialogResult.Yes) return;
+
+            using (var connection = new SqliteConnection(
+                $@"Data Source={dbPath}"))
+            {
+                connection.Open();
+
+                string sql = "DELETE FROM words WHERE id=@id";
+
+                using var command =
+                    new SqliteCommand(sql, connection);
+
+                command.Parameters.AddWithValue("@id", id);
+                command.ExecuteNonQuery();
+            }
+
+            LoadWords();
+            UpdateCount();
+
+            MessageBox.Show("Үг устгагдлаа!");
+        }
+
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+            SearchWords();
+        }
+
+        private void SearchWords()
+        {
+            dataGridView1.Rows.Clear();
+
+            using var connection =
+                new SqliteConnection($@"Data Source={dbPath}");
+
+            connection.Open();
+
+            string sql = @"
+        SELECT id, eng, mon, rus
+        FROM words
+        WHERE eng LIKE @search
+           OR mon LIKE @search
+           OR rus LIKE @search";
+
+            using var command =
+                new SqliteCommand(sql, connection);
+
+            command.Parameters.AddWithValue(
+                "@search", "%" + txtSearch.Text.Trim() + "%");
+
+            using var reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                dataGridView1.Rows.Add(
+                    reader["id"],
+                    reader["eng"],
+                    reader["mon"],
+                    reader["rus"]
+                );
+            }
+        }
+
     }
 }
