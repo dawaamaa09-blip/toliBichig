@@ -44,6 +44,18 @@
             btnDelete = new Button();
             btnEdit = new Button();
             lblCount = new Label();
+            dataGridView1 = new DataGridView();
+            Column1 = new DataGridViewTextBoxColumn();
+            colEng = new DataGridViewTextBoxColumn();
+            colMon = new DataGridViewTextBoxColumn();
+            colRus = new DataGridViewTextBoxColumn();
+            dataGridView2 = new DataGridView();
+            Column2 = new DataGridViewTextBoxColumn();
+            Column3 = new DataGridViewTextBoxColumn();
+            Column4 = new DataGridViewTextBoxColumn();
+            Column5 = new DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
             SuspendLayout();
             // 
             // lblSearch
@@ -198,12 +210,103 @@
             lblCount.TabIndex = 16;
             lblCount.Text = "Нийт: 0 үг ~ Санасан: 0 \r\n";
             // 
+            // dataGridView1
+            // 
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView1.BackgroundColor = Color.White;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Column1, colEng, colMon, colRus });
+            dataGridView1.Location = new Point(24, 75);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.ReadOnly = true;
+            dataGridView1.RowHeadersVisible = false;
+            dataGridView1.RowHeadersWidth = 72;
+            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridView1.Size = new Size(671, 510);
+            dataGridView1.TabIndex = 17;
+            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
+            // 
+            // Column1
+            // 
+            Column1.HeaderText = "№";
+            Column1.MinimumWidth = 9;
+            Column1.Name = "Column1";
+            Column1.ReadOnly = true;
+            // 
+            // colEng
+            // 
+            colEng.HeaderText = "Англи";
+            colEng.MinimumWidth = 9;
+            colEng.Name = "colEng";
+            colEng.ReadOnly = true;
+            // 
+            // colMon
+            // 
+            colMon.HeaderText = "Монгол";
+            colMon.MinimumWidth = 9;
+            colMon.Name = "colMon";
+            colMon.ReadOnly = true;
+            // 
+            // colRus
+            // 
+            colRus.HeaderText = "Орос";
+            colRus.MinimumWidth = 9;
+            colRus.Name = "colRus";
+            colRus.ReadOnly = true;
+            // 
+            // dataGridView2
+            // 
+            dataGridView2.AllowUserToAddRows = false;
+            dataGridView2.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView2.BackgroundColor = SystemColors.Menu;
+            dataGridView2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView2.Columns.AddRange(new DataGridViewColumn[] { Column2, Column3, Column4, Column5 });
+            dataGridView2.Location = new Point(742, 75);
+            dataGridView2.Name = "dataGridView2";
+            dataGridView2.ReadOnly = true;
+            dataGridView2.RowHeadersVisible = false;
+            dataGridView2.RowHeadersWidth = 72;
+            dataGridView2.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridView2.Size = new Size(297, 262);
+            dataGridView2.TabIndex = 18;
+            // 
+            // Column2
+            // 
+            Column2.HeaderText = "№";
+            Column2.MinimumWidth = 9;
+            Column2.Name = "Column2";
+            Column2.ReadOnly = true;
+            // 
+            // Column3
+            // 
+            Column3.HeaderText = "Англи";
+            Column3.MinimumWidth = 9;
+            Column3.Name = "Column3";
+            Column3.ReadOnly = true;
+            // 
+            // Column4
+            // 
+            Column4.HeaderText = "Монгол";
+            Column4.MinimumWidth = 9;
+            Column4.Name = "Column4";
+            Column4.ReadOnly = true;
+            // 
+            // Column5
+            // 
+            Column5.HeaderText = "Орос";
+            Column5.MinimumWidth = 9;
+            Column5.Name = "Column5";
+            Column5.ReadOnly = true;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(12F, 30F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(1055, 796);
+            Controls.Add(dataGridView2);
+            Controls.Add(dataGridView1);
             Controls.Add(lblCount);
             Controls.Add(btnEdit);
             Controls.Add(btnDelete);
@@ -225,6 +328,9 @@
             Name = "Form1";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Гурван хэлний толь бичиг";
+            Load += Form1_Load;
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridView2).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -247,5 +353,15 @@
         private Button btnDelete;
         private Button btnEdit;
         private Label lblCount;
+        private DataGridView dataGridView1;
+        private DataGridView dataGridView2;
+        private DataGridViewTextBoxColumn Column1;
+        private DataGridViewTextBoxColumn colEng;
+        private DataGridViewTextBoxColumn colMon;
+        private DataGridViewTextBoxColumn colRus;
+        private DataGridViewTextBoxColumn Column2;
+        private DataGridViewTextBoxColumn Column3;
+        private DataGridViewTextBoxColumn Column4;
+        private DataGridViewTextBoxColumn Column5;
     }
 }
