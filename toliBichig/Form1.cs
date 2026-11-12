@@ -17,7 +17,7 @@ namespace toliBichig
 
         private void cmbLanguage_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            SearchWords();
         }
 
         private void button6_Click(object sender, EventArgs e)
@@ -235,17 +235,35 @@ namespace toliBichig
         {
             dataGridView1.Rows.Clear();
 
+            string language = cmbLanguage.Text;
+            string column = "";
+
+            if (language == "Англи")
+                column = "eng";
+            else if (language == "Монгол")
+                column = "mon";
+            else if (language == "Орос")
+                column = "rus";
+
+            string sql;
+
+            if (column == "")
+            {
+                sql = @"SELECT id, eng, mon, rus FROM words
+                WHERE eng LIKE @search
+                   OR mon LIKE @search
+                   OR rus LIKE @search";
+            }
+            else
+            {
+                sql = $@"SELECT id, eng, mon, rus FROM words
+                 WHERE {column} LIKE @search";
+            }
+
             using var connection =
                 new SqliteConnection($@"Data Source={dbPath}");
 
             connection.Open();
-
-            string sql = @"
-        SELECT id, eng, mon, rus
-        FROM words
-        WHERE eng LIKE @search
-           OR mon LIKE @search
-           OR rus LIKE @search";
 
             using var command =
                 new SqliteCommand(sql, connection);
@@ -264,6 +282,7 @@ namespace toliBichig
                     reader["rus"]
                 );
             }
+
         }
 
     }
